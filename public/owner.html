@@ -1,0 +1,39 @@
+<!-- public/team-owner.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Team Owner Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Team Owner Panel</h1>
+
+    <h2 id="team-name">Your Team: </h2>
+    <p><strong>Remaining Budget:</strong> ₹<span id="budget">0</span> Cr</p>
+
+    <hr>
+
+    <h2>Current Player</h2>
+    <p>Name: <span id="current-player-name">--</span></p>
+    <p>Base Price: ₹<span id="current-player-price">--</span> L</p>
+
+    <div class="bid-buttons">
+      <button onclick="bid(10)">Bid ₹10L</button>
+      <button onclick="bid(20)">Bid ₹20L</button>
+      <button onclick="bid(100)">Bid ₹1Cr</button>
+      <button onclick="bid(1, true)">+1Cr</button>
+    </div>
+
+    <hr>
+
+    <div id="won-players">
+      <h2>Players Bought</h2>
+      <ul id="players-won-list"></ul>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/owner.js"></script>
+</body>
+</html>

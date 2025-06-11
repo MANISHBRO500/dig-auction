@@ -1,0 +1,41 @@
+<!-- public/auction-holder.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Auction Holder Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Auction Holder Panel</h1>
+
+    <h2>Set Team Budgets</h2>
+    <input type="text" id="teamAName" placeholder="Team A Name">
+    <input type="number" id="teamABudget" placeholder="Team A Budget (Cr)">
+    <br><br>
+    <input type="text" id="teamBName" placeholder="Team B Name">
+    <input type="number" id="teamBBudget" placeholder="Team B Budget (Cr)">
+    <br><br>
+    <button onclick="saveTeams()">Save Teams</button>
+
+    <hr>
+
+    <h2>Add Players for Auction</h2>
+    <input type="text" id="playerName" placeholder="Player Name">
+    <input type="number" id="basePrice" placeholder="Base Price (L)">
+    <button onclick="addPlayer()">Add Player</button>
+
+    <div id="player-list">
+      <h3>Player List:</h3>
+      <ul id="players"></ul>
+    </div>
+
+    <hr>
+
+    <button onclick="startAuction()">Start Auction</button>
+    <button onclick="nextPlayer()">Next Player</button>
+  </div>
+
+  <script src="js/holder.js"></script>
+</body>
+</html>
