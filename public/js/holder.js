@@ -1,4 +1,4 @@
-const socket = io("https://dig-auction.onrender.com");
+const socket = io(); // connect to server
 let players = [];
 let currentPlayerIndex = 0;
 
@@ -28,7 +28,7 @@ function saveTeams() {
     .then(() => alert("Teams saved!"))
     .catch(err => {
       console.error("Save teams error:", err);
-      alert("Failed to save teams. Please check your connection or server.");
+      alert("Error saving teams.");
     });
 }
 
@@ -69,10 +69,34 @@ function startAuction() {
     })
     .catch(err => {
       console.error("Start auction error:", err);
-      alert("Failed to start auction.");
+      alert("Error starting auction.");
     });
 }
 
 function nextPlayer() {
   socket.emit("next-player");
 }
+
+// Listen for auction updates
+socket.on("auction-started", (player) => {
+  document.getElementById("current-player-name").textContent = player.name;
+  document.getElementById("current-player-price").textContent = `${player.basePrice} L`;
+  document.getElementById("current-player-bidder").textContent = "Waiting for bids...";
+});
+
+socket.on("bid-updated", ({ playerName, amount, teamName }) => {
+  document.getElementById("current-player-price").textContent = `${amount / 100} L`;
+  document.getElementById("current-player-bidder").textContent = `Bid by: ${teamName}`;
+});
+
+socket.on("player-sold", ({ player, team }) => {
+  document.getElementById("current-player-bidder").textContent = `✅ SOLD to ${team.name} for ₹${player.soldPrice}L`;
+
+  // Optional: append to a sold players list
+  const soldList = document.getElementById("sold-players");
+  if (soldList) {
+    const li = document.createElement("li");
+    li.textContent = `${player.name} – ₹${player.soldPrice}L to ${team.name}`;
+    soldList.appendChild(li);
+  }
+});
