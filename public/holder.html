@@ -1,46 +1,67 @@
-<!-- public/auction-holder.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Auction Holder Panel</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input, button {
+      margin: 5px;
+    }
+    #players, #sold-players {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+    h3, h4, h5 {
+      margin: 5px 0;
+    }
+    #status {
+      font-weight: bold;
+      color: green;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Auction Holder Panel</h1>
 
-    <h2>Set Team Budgets</h2>
-    <input type="text" id="teamAName" placeholder="Team A Name">
-    <input type="number" id="teamABudget" placeholder="Team A Budget (Cr)">
-    <br><br>
-    <input type="text" id="teamBName" placeholder="Team B Name">
-    <input type="number" id="teamBBudget" placeholder="Team B Budget (Cr)">
-    <br><br>
-    <button onclick="saveTeams()">Save Teams</button>
+  <h1>Auction Holder Panel</h1>
 
-    <hr>
+  <h2>Team Setup</h2>
+  <input id="teamAName" placeholder="Team A Name" />
+  <input id="teamABudget" type="number" placeholder="Team A Budget" />
+  <br/>
+  <input id="teamBName" placeholder="Team B Name" />
+  <input id="teamBBudget" type="number" placeholder="Team B Budget" />
+  <br/>
+  <button onclick="saveTeams()">Save Teams</button>
 
-    <h2>Add Players for Auction</h2>
-    <input type="text" id="playerName" placeholder="Player Name">
-    <input type="number" id="basePrice" placeholder="Base Price (L)">
-    <button onclick="addPlayer()">Add Player</button>
+  <h2>Add Player</h2>
+  <input id="playerName" placeholder="Player Name" />
+  <input id="basePrice" type="number" placeholder="Base Price (L)" />
+  <button onclick="addPlayer()">Add Player</button>
 
-    <div id="player-list">
-      <h3>Player List:</h3>
-      <ul id="players"></ul>
-    </div>
+  <ul id="players"></ul>
 
-    <hr>
+  <button onclick="startAuction()">Start Auction</button>
+  <button onclick="nextPlayer()">Next Player</button>
 
-    <button onclick="startAuction()">Start Auction</button>
-    <button onclick="nextPlayer()">Next Player</button>
-  </div>
- 
-<!-- ✅ Load Socket.IO library first -->
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <hr>
 
-<!-- ✅ Then your own JS file -->
-<script src="js/holder.js"></script>
+  <h2>Live Auction Info</h2>
+  <h3>Current Player: <span id="current-player-name">--</span></h3>
+  <h4>Current Price: ₹<span id="current-player-price">--</span> L</h4>
+  <h5 id="current-player-bidder">Waiting for bids...</h5>
 
+  <h3>Sold Players</h3>
+  <ul id="sold-players"></ul>
+
+  <!-- Socket.io and script -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+    integrity="sha384-wLHiVLEGGzHbMSRoZbnUuJ4l5Z6jRNaCRzKrZx8MdM9lYIFsEazU7wH+SUKbHK+y"
+    crossorigin="anonymous"></script>
+  <script src="holder.js"></script>
 </body>
 </html>
