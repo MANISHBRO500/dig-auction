@@ -1,4 +1,4 @@
-const socket = io(); // connect to server
+const socket = io("https://dig-auction.onrender.com");
 let players = [];
 let currentPlayerIndex = 0;
 
@@ -21,8 +21,15 @@ function saveTeams() {
       { name: teamBName, budget: teamBBudget }
     ])
   })
-    .then(res => res.json())
-    .then(() => alert("Teams saved!"));
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to save teams");
+      return res.json();
+    })
+    .then(() => alert("Teams saved!"))
+    .catch(err => {
+      console.error("Save teams error:", err);
+      alert("Failed to save teams. Please check your connection or server.");
+    });
 }
 
 function addPlayer() {
@@ -47,15 +54,23 @@ function renderPlayerList() {
 }
 
 function startAuction() {
-  // send players to backend
   fetch("https://dig-auction.onrender.com/api/players", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(players)
-  }).then(() => {
-    socket.emit("start-auction");
-    alert("Auction started!");
-  });
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to send players");
+      return res.json();
+    })
+    .then(() => {
+      socket.emit("start-auction");
+      alert("Auction started!");
+    })
+    .catch(err => {
+      console.error("Start auction error:", err);
+      alert("Failed to start auction.");
+    });
 }
 
 function nextPlayer() {
