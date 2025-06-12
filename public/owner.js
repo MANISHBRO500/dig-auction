@@ -1,17 +1,26 @@
-const socket = io();
+const socket = io("https://dig-auction.onrender.com");
 const teamName = prompt("Enter your team name:");
 let teamBudget = 0;
 let currentPlayer = {};
 let wonPlayers = [];
 
 fetch("https://dig-auction.onrender.com/api/teams")
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) {
+      throw new Error(`Failed to fetch teams: ${res.status} ${res.statusText}`);
+    }
+    return res.json();
+  })
   .then(data => {
     const team = data.find(t => t.name === teamName);
     if (!team) return alert("Team not found!");
     teamBudget = team.budget;
     document.getElementById("team-name").textContent = `Your Team: ${team.name}`;
     document.getElementById("budget").textContent = teamBudget.toFixed(2);
+  })
+  .catch(err => {
+    console.error("Fetch error:", err);
+    alert("Failed to load teams. Please check your internet or try again later.");
   });
 
 socket.on("auction-started", (player) => {
