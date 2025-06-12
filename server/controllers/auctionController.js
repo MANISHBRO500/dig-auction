@@ -1,12 +1,10 @@
-const Player = require("../models/Player");
+const Team = require("../models/Team");
 
-exports.savePlayers = async (req, res) => {
+exports.getTeams = async (req, res) => {
   try {
-    await Player.deleteMany(); // Clear existing players if needed
-    await Player.insertMany(req.body);
-    res.status(201).json({ message: "Players saved" });
+    const teams = await Team.find();
+    res.json(teams);
   } catch (err) {
-    console.error("Save players error:", err);
-    res.status(500).json({ error: "Failed to save players" });
+    res.status(500).json({ error: "Failed to fetch teams" });
   }
 };
