@@ -1,9 +1,7 @@
-// server/routes/auctionRoutes.js
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const auctionController = require('../controllers/auctionController');
+const auctionController = require("../controllers/auctionController");
 
-router.get("/teams", auctionController.getTeams);
-router.get("/players", auctionController.getPlayers);
+router.post("/teams", auctionController.createTeams); // ✅ required
 
 module.exports = router;
