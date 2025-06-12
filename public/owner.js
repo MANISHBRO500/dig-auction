@@ -4,7 +4,7 @@ let teamBudget = 0;
 let currentPlayer = {};
 let wonPlayers = [];
 
-fetch("/api/teams")
+fetch("https://dig-auction.onrender.com/api/teams")
   .then(res => res.json())
   .then(data => {
     const team = data.find(t => t.name === teamName);
