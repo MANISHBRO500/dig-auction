@@ -13,7 +13,7 @@ function saveTeams() {
     return;
   }
 
-  fetch("/api/teams", {
+  fetch("https://dig-auction.onrender.com/api/teams", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify([
@@ -48,7 +48,7 @@ function renderPlayerList() {
 
 function startAuction() {
   // send players to backend
-  fetch("/api/players", {
+  fetch("https://dig-auction.onrender.com/api/players", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(players)
